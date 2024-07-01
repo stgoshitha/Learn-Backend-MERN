@@ -1,5 +1,6 @@
 const express = require('express')
-const bodyParser = require('body-parser') 
+const bodyParser = require('body-parser')
+const {MongoClient} = require('mongodb') 
 
 const app = express()
 const port = 3000
@@ -9,6 +10,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 //This line configures the app to parse incoming requests with JSON payloads. This is commonly used in APIs where the client sends data in JSON format.
 app.use(bodyParser.json())
+
+//Connection URL
+const url = 'mongodb://127.0.0.1:27017'
+const client = new MongoClient(url)
+
+//Database Name
+const dbName = 'Project';
+
+client.connect();
+console.log("Connected successfully to server");
+const db = client.db(dbName);
+const collection = db.collection('phone');
 
 app.get('/', (req, res) => {
   res.send('Hello World! - Get method')
