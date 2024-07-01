@@ -23,8 +23,10 @@ console.log("Connected successfully to server");
 const db = client.db(dbName);
 const collection = db.collection('phone');
 
-app.get('/', (req, res) => {
-  res.send('Hello World! - Get method')
+app.get('/', async(req, res) => {
+  const findResult = await collection.find({}).toArray();
+  res.send(findResult);
+  res.send('Hello World! - Get method');
 })
 
 app.post('/', (req, res) => {
