@@ -23,28 +23,34 @@ console.log("Connected successfully to server");
 const db = client.db(dbName);
 const collection = db.collection('phone');
 
+// Create and GET
 app.get('/', async(req, res) => {
   const findResult = await collection.find({}).toArray();
   res.send(findResult);
-  //res.send('Hello World! - Get method')
+  //res.send('Hello World! - Get method');
 })
 
+// Create and POST
 app.post('/', async(req, res) => {
   const insertResult = await collection.insertOne(req.body);
   res.send(insertResult);
-  //res.send('Hello World! - Post method')
+  //res.send('Hello World! - Post method');
 })
 
-app.put('/', (req, res) => {
-  //res.send('Hello World! - Put method')
+// Update and PUT
+app.put('/:id', async(req, res) => {
+  const updateResult = await collection.updateOne({ _id: new ObjectId(req.params.id) }, {$set: req.body});
+  res.send(updateResult);
+  //res.send('Hello World! - Put method');
 })
 
+// Delete and DELETE
 app.delete('/:id', async(req, res) => {
   const deleteResult = await collection.deleteOne({_id : new ObjectId(req.params.id)});
   res.send(deleteResult);
-  //res.send('Hello World! - Delete method')
+  //res.send('Hello World! - Delete method');
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
 })
