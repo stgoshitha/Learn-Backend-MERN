@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const {MongoClient} = require('mongodb') 
+const {MongoClient, ObjectId} = require('mongodb') 
 
 const app = express()
 const port = 3000
@@ -26,19 +26,23 @@ const collection = db.collection('phone');
 app.get('/', async(req, res) => {
   const findResult = await collection.find({}).toArray();
   res.send(findResult);
+  //res.send('Hello World! - Get method')
 })
 
 app.post('/', async(req, res) => {
   const insertResult = await collection.insertOne(req.body);
   res.send(insertResult);
+  //res.send('Hello World! - Post method')
 })
 
 app.put('/', (req, res) => {
-  res.send('Hello World! - Put method')
+  //res.send('Hello World! - Put method')
 })
 
-app.delete('/', (req, res) => {
-  res.send('Hello World! - Delete method')
+app.delete('/:id', async(req, res) => {
+  const deleteResult = await collection.deleteOne({_id : new ObjectId(req.params.id)});
+  res.send(deleteResult);
+  //res.send('Hello World! - Delete method')
 })
 
 app.listen(port, () => {
