@@ -17,11 +17,12 @@ const client = new MongoClient(url)
 
 //Database Name
 const dbName = 'Project';
+const collectionName = 'phone';
 
 client.connect();
 console.log("Connected successfully to server");
 const db = client.db(dbName);
-const collection = db.collection('phone');
+const collection = db.collection(collectionName);
 
 // Create and GET
 app.get('/', async(req, res) => {
