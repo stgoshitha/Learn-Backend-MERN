@@ -26,20 +26,20 @@ const collection = db.collection('phone');
 app.get('/', async(req, res) => {
   const findResult = await collection.find({}).toArray();
   res.send(findResult);
-  res.send('Hello World! - Get method');
 })
 
-app.post('/', (req, res) => {
-    res.send('Hello World! - Post method')
-  })
+app.post('/', async(req, res) => {
+  const insertResult = await collection.insertOne(req.body);
+  res.send(insertResult);
+})
 
-  app.put('/', (req, res) => {
-    res.send('Hello World! - Put method')
-  })
+app.put('/', (req, res) => {
+  res.send('Hello World! - Put method')
+})
 
-  app.delete('/', (req, res) => {
-    res.send('Hello World! - Delete method')
-  })
+app.delete('/', (req, res) => {
+  res.send('Hello World! - Delete method')
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
